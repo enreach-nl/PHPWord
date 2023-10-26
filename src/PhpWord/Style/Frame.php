@@ -117,6 +117,13 @@ class Frame extends AbstractStyle
     private $height;
 
     /**
+     * Max width.
+     *
+     * @var int|float
+     */
+    private $maxWidth;
+    
+    /**
      * Leftmost (horizontal) position.
      *
      * @var float|int
@@ -313,6 +320,29 @@ class Frame extends AbstractStyle
     public function setHeight($value = null)
     {
         $this->height = $this->setNumericVal($value, null);
+
+        return $this;
+    }
+
+    /**
+     * Get max width.
+     *
+     * @return int|float
+     */
+    public function getMaxWidth()
+    {
+        return $this->maxWidth;
+    }
+
+    /**
+     * Set max width.
+     *
+     * @param int|float $value
+     * @return self
+     */
+    public function setMaxWidth($value = null)
+    {
+        $this->maxWidth = $this->setNumericVal($value, null);
 
         return $this;
     }
