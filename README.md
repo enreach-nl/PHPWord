@@ -68,11 +68,7 @@ To [add a dependency](https://getcomposer.org/doc/04-schema.md#package-links) to
 
 Run the following to use the latest stable version
 ```sh
-composer require phpoffice/phpword
-```
-or if you want the latest unreleased version
-```sh
-composer require phpoffice/phpword:dev-master
+composer require enreach-nl/phpword
 ```
 
 ## Getting started
