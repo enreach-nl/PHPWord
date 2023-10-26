@@ -910,28 +910,33 @@ class Html
                     foreach ($styleattr as $attr) {
                         if (strpos($attr, ':')) {
                             [$k, $v] = explode(':', $attr);
+                            $v = trim($v);
                             switch ($k) {
                                 case 'float':
-                                    if (trim($v) == 'right') {
+                                    if ($v == 'right') {
                                         $style['hPos'] = \PhpOffice\PhpWord\Style\Image::POS_RIGHT;
                                         $style['hPosRelTo'] = \PhpOffice\PhpWord\Style\Image::POS_RELTO_MARGIN; // inner section area
                                         $style['pos'] = \PhpOffice\PhpWord\Style\Image::POS_RELATIVE;
                                         $style['wrap'] = \PhpOffice\PhpWord\Style\Image::WRAP_TIGHT;
                                         $style['overlap'] = true;
                                     }
-                                    if (trim($v) == 'left') {
+                                    if ($v == 'left') {
                                         $style['hPos'] = \PhpOffice\PhpWord\Style\Image::POS_LEFT;
                                         $style['hPosRelTo'] = \PhpOffice\PhpWord\Style\Image::POS_RELTO_MARGIN; // inner section area
                                         $style['pos'] = \PhpOffice\PhpWord\Style\Image::POS_RELATIVE;
                                         $style['wrap'] = \PhpOffice\PhpWord\Style\Image::WRAP_TIGHT;
                                         $style['overlap'] = true;
                                     }
-
                                     break;
+                                case 'max-width':
+                                    if (preg_match('/([0-9]+[a-z]+)/', $v, $matches)) {
+                                        $style['maxWidth'] = Converter::cssToPixel($matches[1]);
+                                        $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PX;
+                                    }
+                                break;
                             }
                         }
                     }
-
                     break;
             }
         }
