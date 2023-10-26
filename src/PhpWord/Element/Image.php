@@ -581,19 +581,28 @@ class Image extends AbstractElement
      * @param int $actualWidth
      * @param int $actualHeight
      */
-    private function setProportionalSize($actualWidth, $actualHeight): void
+    private function setProportionalSize($actualWidth, $actualHeight)
     {
         $styleWidth = $this->style->getWidth();
         $styleHeight = $this->style->getHeight();
         if (!($styleWidth && $styleHeight)) {
             if ($styleWidth == null && $styleHeight == null) {
-                $this->style->setWidth($actualWidth);
-                $this->style->setHeight($actualHeight);
+                $styleWidth = $actualWidth;
+                $styleHeight = $actualHeight;
             } elseif ($styleWidth) {
-                $this->style->setHeight($actualHeight * ($styleWidth / $actualWidth));
+                $styleHeight = $actualHeight * ($styleWidth / $actualWidth);
             } else {
-                $this->style->setWidth($actualWidth * ($styleHeight / $actualHeight));
+                $styleWidth = $actualWidth * ($styleHeight / $actualHeight);
             }
         }
+        $styleMaxWidth = $this->style->getMaxWidth();
+        if ($styleMaxWidth) {
+            if ($styleMaxWidth < $styleWidth) {
+                $styleWidth = $styleMaxWidth;
+                $styleHeight = $actualHeight * ($styleMaxWidth / $actualWidth);
+            }
+        }
+        $this->style->setWidth($styleWidth);
+        $this->style->setHeight($styleHeight);
     }
 }
